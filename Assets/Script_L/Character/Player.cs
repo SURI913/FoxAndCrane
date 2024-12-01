@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Default;
 
 public class Player : MonoBehaviour
 {
@@ -12,34 +11,67 @@ public class Player : MonoBehaviour
     [Header("[테스트용] true: 횡스크롤, false: 탑뷰")]
     public bool isSideScroll = true;
 
-    private Rigidbody myRigidBody;
-    private bool isGrounded; 
+    protected Rigidbody myRigidBody;
+    private bool isGrounded;
 
-    private void Start()
+    protected virtual void Start()
     {
         myRigidBody = GetComponent<Rigidbody>();
+        myRigidBody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+
         isGrounded = false;
+
+        PlayerData.currentPlayer = GetPlayerType();       
+        //먼저 시작할 개체만 스크립트 활성화
     }
 
-    void Update()
+    protected virtual void Update()
     {
-        // 입력 받기
+
+        //사용자 캐릭터 변경
+        if (Input.GetKeyDown(KeyCode.Z) && isActiveAndEnabled)
+        {
+            SetPlayerType(PlayerData.currentPlayer == PlayerType.Fox ? PlayerType.Crane : PlayerType.Fox);
+            print("현재 움직일 수 있는 캐릭터: " + PlayerData.currentPlayer);
+        }
+
+        MoveMent();
+        Jump();        
+    }
+
+    public void SetPlayerType(PlayerType changeType)
+    {
+        PlayerData.currentPlayer = changeType;
+        print(PlayerData.currentPlayer);
+        //자식 업데이트 제어
+        foreach (Player player in FindObjectsOfType<Player>())
+        {         
+            player.enabled = (player.GetPlayerType() == changeType);
+            Debug.Log($"{player.GetPlayerType()} : {player.GetPlayerType() == changeType}");
+        }
+    }
+    protected virtual PlayerType GetPlayerType()
+    {
+        return PlayerType.None; //자식에서 구현
+    }
+
+    private void MoveMent()
+    {
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = isSideScroll ? 0 : Input.GetAxis("Vertical");
 
-        MoveMent(moveX, moveZ);
-        Jump();
-    }
-
-    private void MoveMent(float moveX, float moveZ)
-    {
         Vector3 movement = isSideScroll
             ? new Vector3(moveX, 0, 0)
             : new Vector3(moveX, 0, moveZ);
 
-        // 이동 처리
-        myRigidBody.velocity =
-            new Vector3(movement.x * moveSpeed, myRigidBody.velocity.y, movement.z * moveSpeed);
+        //이동처리 [물리] normalized필요없음
+        myRigidBody.velocity = new Vector3(
+            movement.x * moveSpeed,
+            myRigidBody.velocity.y,
+            movement.z * moveSpeed
+        );
+        //이동처리 [포지션] normalized 필요
+        //transform.position += movement * moveSpeed * Time.deltaTime;
     }
 
     private void Jump()
@@ -49,7 +81,7 @@ public class Player : MonoBehaviour
         {
             myRigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
-            Console.WriteLine("점프함");
+            //print("점프함");
         }
     }
     
@@ -64,7 +96,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            Console.WriteLine( "땅에 닿음");
+            //print( "땅에 닿음");
         }
     }
 }
