@@ -15,7 +15,7 @@ public class branch : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Ground나 다른 오브젝트와 충돌했을 때
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("BridgePart"))
+        if (collision.gameObject.CompareTag("BridgePart"))
         {
             // rigidbody를 비활성화해서 물리적인 움직임 멈춤
             if (rb != null)
