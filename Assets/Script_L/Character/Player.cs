@@ -64,14 +64,16 @@ public class Player : MonoBehaviour
             ? new Vector3(moveX, 0, 0)
             : new Vector3(moveX, 0, moveZ);
 
+        movement = movement.normalized;
+
         //이동처리 [물리] normalized필요없음
-        myRigidBody.velocity = new Vector3(
+        /*myRigidBody.velocity = new Vector3(
             movement.x * moveSpeed,
             myRigidBody.velocity.y,
             movement.z * moveSpeed
-        );
+        );*/
         //이동처리 [포지션] normalized 필요
-        //transform.position += movement * moveSpeed * Time.deltaTime;
+        transform.position += movement * moveSpeed * Time.deltaTime;
     }
 
     private void Jump()

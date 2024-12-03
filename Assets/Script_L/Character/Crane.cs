@@ -23,22 +23,4 @@ public class Crane : Player
     {
         return PlayerType.Crane;
     }
-
-    private void OnDisable()
-    {
-        //움직임 멈춤 포지션으로 이동 구현 시 필요없음
-        if (myRigidBody != null)
-        {
-            myRigidBody.velocity = Vector3.zero;
-            myRigidBody.isKinematic = true;
-        }
-    }
-
-    private void OnEnable()
-    {
-        if (myRigidBody != null)
-        {
-            myRigidBody.isKinematic = false;
-        }
-    }
 }
