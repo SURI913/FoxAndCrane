@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Default;
 
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("이동 속도 조절")]
     public float moveSpeed = 5f; // 이동 속도
@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
         PlayerData.currentPlayer = changeType;
         print(PlayerData.currentPlayer);
         //자식 업데이트 제어
-        foreach (Player player in FindObjectsOfType<Player>())
+        foreach (PlayerMovement player in FindObjectsOfType<PlayerMovement>())
         {         
             player.enabled = (player.GetPlayerType() == changeType);
             Debug.Log($"{player.GetPlayerType()} : {player.GetPlayerType() == changeType}");
