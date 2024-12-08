@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class branch : MonoBehaviour
+public class Branch : MonoBehaviour
 {
     private Rigidbody rb; // Rigidbody 컴포넌트 저장
 
