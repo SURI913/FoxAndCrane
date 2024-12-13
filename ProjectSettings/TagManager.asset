@@ -8,6 +8,7 @@ TagManager:
   - branch
   - Ground
   - BridgePart
+  - Berry
   layers:
   - Default
   - TransparentFX
