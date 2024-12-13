@@ -9,6 +9,7 @@ TagManager:
   - BridgePart
   - Ground
   - Crow
+  - Berry
   layers:
   - Default
   - TransparentFX
