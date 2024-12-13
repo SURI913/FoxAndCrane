@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Default;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,9 +14,14 @@ public class PlayerMovement : MonoBehaviour
 
     protected Rigidbody myRigidBody;
     private bool isGrounded;
+    private bool isBorder;
+    private bool isReversing;
+    private Vector3 movement;
+    Animator myAnimator;
 
     protected virtual void Start()
     {
+        myAnimator = GetComponentInChildren<Animator>();
         myRigidBody = GetComponent<Rigidbody>();
         myRigidBody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
 
@@ -27,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Update()
     {
-
+        if (isReversing) return; //움직임 제한중
         //사용자 캐릭터 변경
         if (Input.GetKeyDown(KeyCode.Z) && isActiveAndEnabled)
         {
@@ -37,6 +43,23 @@ public class PlayerMovement : MonoBehaviour
 
         MoveMent();
         Jump();        
+    }
+
+    protected void FixedUpdate()
+    {
+        FreezeRotation();
+        IsCollideWall();
+    }
+
+    private void FreezeRotation()
+    {
+        //외부 충돌 회전 제어
+        myRigidBody.angularVelocity = Vector3.zero;
+    }
+    private void IsCollideWall()
+    {
+        Debug.DrawRay(transform.position, transform.forward * 0.8f, Color.green);
+        isBorder = Physics.Raycast(transform.position, transform.forward, 0.8f, LayerMask.GetMask("Wall"));
     }
 
     public void SetPlayerType(PlayerType changeType)
@@ -60,10 +83,10 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = isSideScroll ? 0 : Input.GetAxis("Vertical");
 
-        Vector3 movement = isSideScroll
+        movement = isSideScroll
             ? new Vector3(moveX, 0, 0)
             : new Vector3(moveX, 0, moveZ);
-
+ 
         movement = movement.normalized;
 
         //이동처리 [물리] normalized필요없음
@@ -73,7 +96,13 @@ public class PlayerMovement : MonoBehaviour
             movement.z * moveSpeed
         );*/
         //이동처리 [포지션] normalized 필요
-        transform.position += movement * moveSpeed * Time.deltaTime;
+        if (!isBorder)
+        {
+            transform.position += movement * moveSpeed * Time.deltaTime;
+        }
+        myAnimator.SetBool("isWalk", movement != Vector3.zero);
+
+        Turn();
     }
 
     private void Jump()
@@ -83,13 +112,14 @@ public class PlayerMovement : MonoBehaviour
         {
             myRigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
+            myAnimator.SetTrigger("isJump");
             //print("점프함");
         }
-    }
+    }  
     
     private void Turn()
     {
-        //캐릭터에 회전이 필요한지 물어봐야함
+        transform.LookAt(transform.position + movement); //움직일 방향으로 회전 //안쓰면 주석처리
     }
 
     void OnCollisionEnter(Collision collision)
@@ -100,5 +130,33 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = true;
             //print( "땅에 닿음");
         }
+        else if (collision.gameObject.CompareTag("Crow"))
+        {
+            StartCoroutine(ReverseMovement());
+        }
     }
+
+    public IEnumerator ReverseMovement()
+    {
+
+        isReversing = true; // 입력값 제한 시작
+
+        // 후퇴 동작
+        float reverseTime = 1f; // 후퇴 지속 시간
+        float elapsedTime = 0f;
+
+        while (elapsedTime < reverseTime)
+        {
+            movement = Vector3.back;
+            transform.Translate(movement * moveSpeed * Time.deltaTime);
+            //Turn(); //=> 결과값이 rotation y =180이 들어감 이유는?
+            //transform.rotation = new Quaternion(0,-90,0,0);
+            // => 결과값이 rotation y = -180이 들어감 이유는?
+            elapsedTime += Time.deltaTime;
+            yield return null; // 한 프레임 대기
+        }
+
+        isReversing = false; // 입력값 제한 해제
+    }
+
 }
