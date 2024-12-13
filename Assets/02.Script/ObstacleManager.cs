@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ObstacleManager : MonoBehaviour
 {
     public class ObstaclePool
@@ -50,5 +51,19 @@ public class ObstacleManager : MonoBehaviour
         poolDictionary[typeName].Enqueue(objToSpawn);
 
         return objToSpawn;
+    }
+    public void ReturnObstacle(string typeName, GameObject obstacle)
+    {
+        if (!poolDictionary.ContainsKey(typeName))
+        {
+            //풀에 없으면 출력 후 삭제 
+            Debug.Log($"풀에 {typeName} 유형이 없습니다.");
+            Destroy(obstacle); 
+            return;
+        }
+
+        obstacle.SetActive(false);
+
+        poolDictionary[typeName].Enqueue(obstacle); // 반환된거 다시 넣어줌
     }
 }
