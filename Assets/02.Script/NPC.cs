@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+    private Rigidbody rb;
     [SerializeField]
     private GameObject boneFire;
+    public float moveSpeed = 2f; // 이동 속도
+  
 
-   
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
        
@@ -16,18 +24,22 @@ public class NPC : MonoBehaviour
             Debug.Log("열매 왕 비켜줌");
             MoveOutOfWay();
         } 
-        else if (collision.gameObject.CompareTag("branch"))
+
+
+        if(collision.gameObject.CompareTag("branch1"))
         {
             Debug.Log("나뭇가지 확인. 모닥불 드림");
             GiveFire();
-            Destroy(collision.gameObject);// branch Destroy
+           Destroy(collision.gameObject);// branch Destroy
         }
     }
 
     private void MoveOutOfWay()
-    {  
-        transform.position += new Vector3(2f, 0, 0);
-        //NPC behaviour 바꿔주기
+    {
+        float targetPositionZ = transform.position.z + 2f;
+
+        // Z축 방향으로 부드럽게 이동
+        float smoothZ = Mathf.Lerp(transform.position.z, targetPositionZ, Time.deltaTime * moveSpeed);
     }
 
    

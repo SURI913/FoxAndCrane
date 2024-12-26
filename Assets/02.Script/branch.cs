@@ -16,7 +16,7 @@ public class Branch : MonoBehaviour
         obstacleManager = FindObjectOfType<ObstacleManager>();
         if (obstacleManager == null)
         {
-            Debug.LogError("is not null");
+          //  Debug.LogError("is not null");
         }
     }
 
