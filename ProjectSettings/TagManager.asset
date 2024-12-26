@@ -9,6 +9,9 @@ TagManager:
   - Ground
   - BridgePart
   - Berry
+  - Firefly
+  - Crow
+  - branch1
   layers:
   - Default
   - TransparentFX
