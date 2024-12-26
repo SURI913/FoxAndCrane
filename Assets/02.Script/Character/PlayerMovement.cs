@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         myAnimator = GetComponentInChildren<Animator>();
         myRigidBody = GetComponent<Rigidbody>();
-        myRigidBody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+        myRigidBody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
 
         isGrounded = false;
 
@@ -44,10 +44,12 @@ public class PlayerMovement : MonoBehaviour
         //사용자 캐릭터 변경
         if (Input.GetKeyDown(KeyCode.Z) && isActiveAndEnabled)
         {
+            myAnimator.SetBool("isWalk", false); //걸을때 전환되더라도 애니메이션 정지되야하는디 안됨,,
             SetPlayerType(PlayerData.currentPlayer == PlayerType.Fox ? PlayerType.Crane : PlayerType.Fox);
             // 이벤트 호출
             OnSwitchObject?.Invoke();
             print("현재 움직일 수 있는 캐릭터: " + PlayerData.currentPlayer);
+            
         }
 
         MoveMent();
@@ -111,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
         }
         myAnimator.SetBool("isWalk", movement != Vector3.zero);
 
-        Turn();
+        //Turn();
     }
 
     private void Jump()
