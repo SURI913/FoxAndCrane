@@ -6,6 +6,7 @@ public class SwichingCamera : MonoBehaviour
 {
     public GameObject[] cameraGroup = new GameObject[2];
     public GameObject lightObject;
+    public GameObject shadowObject;
     private bool isChange;
 
     public static event Action OnSwichMovement;
@@ -17,6 +18,7 @@ public class SwichingCamera : MonoBehaviour
     private void Start()
     {
         isChange = false;
+        shadowObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -78,5 +80,6 @@ public class SwichingCamera : MonoBehaviour
         // 최종적으로 정확히 목표 각도로 설정
         lightObject.transform.rotation = endRotation;
         currentRotationCoroutine = null;
+        shadowObject.SetActive(true);
     }
 }
