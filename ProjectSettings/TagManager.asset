@@ -5,11 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - branch
-  - Ground
   - BridgePart
-  - Ground
   - Crow
   - Berry
+  - Ground
+  - EndPoint
   layers:
   - Default
   - TransparentFX
