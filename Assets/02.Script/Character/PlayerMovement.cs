@@ -1,7 +1,8 @@
-using System;
+
 using UnityEngine;
 using Default;
 using System.Collections;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,6 +20,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movement;
     Animator myAnimator;
 
+    // 이벤트 선언
+    public static event Action OnSwitchObject;
+    public static event Action OnSwitchCamera;
+
     protected virtual void Start()
     {
         myAnimator = GetComponentInChildren<Animator>();
@@ -34,10 +39,14 @@ public class PlayerMovement : MonoBehaviour
     protected virtual void Update()
     {
         if (isReversing) return; //움직임 제한중
+        //갑자기 입력이 바뀌니까 그런건가 뭔가 버벅거림 + 
+
         //사용자 캐릭터 변경
         if (Input.GetKeyDown(KeyCode.Z) && isActiveAndEnabled)
         {
             SetPlayerType(PlayerData.currentPlayer == PlayerType.Fox ? PlayerType.Crane : PlayerType.Fox);
+            // 이벤트 호출
+            OnSwitchObject?.Invoke();
             print("현재 움직일 수 있는 캐릭터: " + PlayerData.currentPlayer);
         }
 
@@ -85,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         movement = isSideScroll
             ? new Vector3(moveX, 0, 0)
-            : new Vector3(moveX, 0, moveZ);
+            : new Vector3(moveZ, 0, -moveX);
  
         movement = movement.normalized;
 
@@ -134,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(ReverseMovement());
         }
+        
     }
 
     public IEnumerator ReverseMovement()
@@ -158,5 +168,28 @@ public class PlayerMovement : MonoBehaviour
 
         isReversing = false; // 입력값 제한 해제
     }
+     
+    private void OnSwichMovement()
+    {
+        ReversingControll(); //카메라 방향에 맞춰서 그런가
+        //어느정도 문구가 떠야할 듯 방향키관련해서
+        isSideScroll = !isSideScroll;
+        Invoke("ReversingControll", 2f);
+        
+    }
+    private void ReversingControll()
+    {
+        isReversing = !isReversing;
+    }
+    private void OnEnable()
+    {
+        // 이벤트 구독
+        SwichingCamera.OnSwichMovement += OnSwichMovement;
+    }
 
+    private void OnDisable()
+    {
+        // 이벤트 구독 해제
+        SwichingCamera.OnSwichMovement -= OnSwichMovement;
+    }
 }
