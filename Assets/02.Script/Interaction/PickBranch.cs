@@ -10,7 +10,7 @@ public class PickBranch : MonoBehaviour, ICraneInteractable
     {
         rigid = GetComponent<Rigidbody>();
     }
-    public void Interaction(CraneInteraction obj)
+    public void Interaction(CraneInteraction obj) //나무에서만 키네메틱 유지
     {
         if (obj.transform.childCount == 0)
         {

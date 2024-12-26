@@ -6,29 +6,21 @@ using UnityEngine;
 
 public class Fruit : MonoBehaviour
 {
-    
 
-    public int mass; //mass값 써야할 듯
+    public int mass; 
 
 
     public Action<Fruit> OnPositionChanged;
 
     Vector3 lastPosition;
 
-    Rigidbody rigid;
-    private void Awake()
-    {
-        rigid = GetComponent<Rigidbody>();
-    }
-
     private void Start()
     {
-        rigid.mass = mass;
         lastPosition = transform.position;
     }
     private void Update()
     {
-        if(transform.position != lastPosition)
+        if (transform.position != lastPosition)
         {
             lastPosition = transform.position;
 
