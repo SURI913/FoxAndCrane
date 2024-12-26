@@ -19,7 +19,6 @@ public class FireParticle : MonoBehaviour
     }
     void Fire()//파티클 멈추기
     {
-        float disSqr = Mathf.Infinity;
         float distance = Vector3.Distance(transform.position, crane.transform.position);
 
         if(distance <= particleRange)
