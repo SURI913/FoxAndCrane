@@ -12,7 +12,7 @@ public class PutBranch : MonoBehaviour, ICraneInteractable
     }
     public void Interaction(CraneInteraction obj)
     {
-        Debug.Log("자식 분리");
+     
         transform.SetParent(null);
         rigid.isKinematic = false;
     }

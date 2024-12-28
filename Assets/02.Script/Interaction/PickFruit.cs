@@ -6,7 +6,7 @@ public class PickFruit : MonoBehaviour, ICraneInteractable
 {
     Rigidbody rigid;
 
-
+    
 
     void Awake()
 
@@ -20,9 +20,14 @@ public class PickFruit : MonoBehaviour, ICraneInteractable
     }
     public void Interaction(CraneInteraction obj)
     {
+        GameObject fruit = null;
         if (obj.transform.childCount == 0)
         {
-            transform.SetParent(obj.transform);
+            Debug.Log("열매 상호작용");
+            fruit = this.gameObject;
+            fruit.transform.SetParent(obj.transform);
+            //자식 위치 수정
+            fruit.transform.localPosition = new Vector3(0, -0.05f, 0.4f);
         }
         else
         {
@@ -35,6 +40,7 @@ public class PickFruit : MonoBehaviour, ICraneInteractable
         if (collision.gameObject.tag == "Tree")
         {
             rigid.isKinematic = true;
+            transform.SetParent(collision.transform);
         }
     }
 }
