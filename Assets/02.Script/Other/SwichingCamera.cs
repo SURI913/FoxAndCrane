@@ -63,7 +63,7 @@ public class SwichingCamera : MonoBehaviour
         }
 
         // 货肺款 内风凭 矫累
-        currentRotationCoroutine = StartCoroutine(RotateLight(startRotation, endRotation));
+        //currentRotationCoroutine = StartCoroutine(RotateLight(startRotation, endRotation));
     }
 
     private IEnumerator RotateLight(Quaternion startRotation, Quaternion endRotation)
