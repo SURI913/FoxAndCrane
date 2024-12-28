@@ -7,7 +7,8 @@ public class FireParticle : MonoBehaviour
     public ParticleSystem fireParticle;
     public GameObject crane;
 
-    float particleRange = 10;
+    [SerializeField]
+    float particleRange;
 
     ParticleSystem.EmissionModule emissionModule;
 

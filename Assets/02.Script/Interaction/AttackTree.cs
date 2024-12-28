@@ -26,9 +26,8 @@ public class AttackTree : MonoBehaviour, IFoxInteractable
         {
             FallTree();
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape))//
         {
-            Application.Quit();
             left.Clear();
             right.Clear();
         }

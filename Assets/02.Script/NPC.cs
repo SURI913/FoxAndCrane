@@ -21,7 +21,7 @@ public class NPC : MonoBehaviour
        
         if (collision.gameObject.CompareTag("Berry"))
         {
-            Debug.Log("¿­¸Å ¿Õ ºñÄÑÁÜ");
+            Debug.Log("¿­¸Å È®ÀÎ, ¿Õ ºñÄÑÁÜ");
             MoveOutOfWay();
         } 
 
@@ -30,7 +30,7 @@ public class NPC : MonoBehaviour
         {
             Debug.Log("³ª¹µ°¡Áö È®ÀÎ. ¸ð´ÚºÒ µå¸²");
             GiveFire();
-           Destroy(collision.gameObject);// branch Destroy
+            Destroy(collision.gameObject);// branch Destroy
         }
     }
 

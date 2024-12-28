@@ -4,28 +4,37 @@ using UnityEngine;
 
 public class PickBranch : MonoBehaviour, ICraneInteractable
 {
-    Rigidbody rigid;
+    public ObstacleManager obsManager;
 
-    void Awake()
-    {
-        rigid = GetComponent<Rigidbody>();
-    }
-    public void Interaction(CraneInteraction obj) //나무에서만 키네메틱 유지
+    public void Interaction(CraneInteraction obj) 
     {
         if (obj.transform.childCount == 0)
         {
+            GameObject branch = null;
+            branch = obsManager.SpawnObstacle("Branch", obj.transform.position, Quaternion.identity);
             //플레이어 자식으로 같이 움직이기
-            transform.SetParent(obj.transform);
+            branch.transform.SetParent(obj.transform);
 
-            //※자식 위치 수정 필요
+            //자식 위치 수정
+            branch.transform.localPosition = new Vector3(0,-0.1f, 0.3f); 
+            branch.transform.localRotation = Quaternion.Euler(0 ,180, 0);
+            if(!branch)
+            {
+                branch = null;
+            }
         }
-        else //집은 상태로 놓기
-        {
-            transform.SetParent(null);
+        //else
+        //{
+        //    Debug.Log("자식 제거");
+        //    // 자식 오브젝트 가져오기
+        //    branch = obj.transform.GetChild(0).gameObject;
 
-            //떨어트리기
-            if (!rigid) return;
-            rigid.isKinematic = false;
-        }
+        //    branch.transform.SetParent(null);
+
+        //    //떨어트리기
+        //    Rigidbody rigid = branch.GetComponent<Rigidbody>();
+        //    if (!rigid) return;
+        //    rigid.isKinematic = false;
+        //}
     }
 }
