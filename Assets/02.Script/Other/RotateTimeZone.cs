@@ -11,8 +11,13 @@ public class RotateTimeZone : MonoBehaviour
 
     private bool isChange;
 
-    struct LightType{
-        public LightType(Quaternion _quaternion, Color _color)
+    enum LightType
+    {
+
+    }
+
+    struct LightValue{
+        public LightValue(Quaternion _quaternion, Color _color)
         {
             quaternion = _quaternion;
             color = _color;
@@ -20,10 +25,10 @@ public class RotateTimeZone : MonoBehaviour
         Quaternion quaternion;
         Color color;
     }
-    LightType dayTime = new LightType(Quaternion.Euler(50, -30, 0), new Color(255, 244, 214));
-    LightType eveningTime = new LightType(Quaternion.Euler(40,-45,-20), new Color(180, 150, 145));
-    LightType nightTime = new LightType(Quaternion.Euler(185, 45, -20), new Color(55, 65, 80));
-    LightType endTime = new LightType(Quaternion.Euler(0, 70, 0), new Color(180, 150, 145));
+    LightValue dayTime = new LightValue(Quaternion.Euler(50, -30, 0), new Color(255, 244, 214));
+    LightValue eveningTime = new LightValue(Quaternion.Euler(40,-45,-20), new Color(180, 150, 145));
+    LightValue nightTime = new LightValue(Quaternion.Euler(185, 45, -20), new Color(55, 65, 80));
+    LightValue endTime = new LightValue(Quaternion.Euler(0, 70, 0), new Color(180, 150, 145));
 
 
 
