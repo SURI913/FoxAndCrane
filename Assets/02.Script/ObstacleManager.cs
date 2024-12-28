@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
 {
+    [System.Serializable]
     public class ObstaclePool
     {
         public string typeName;
