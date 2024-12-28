@@ -12,11 +12,11 @@ public class CraneInteraction : PlayerInteraction
     {
         //레이캐스트를 쏴서 닿이는 오브젝트와 상호작용 
         //※캐릭터가 flip 하면 레이캐스트 방향 바꿔주기
-        Debug.DrawRay(transform.position, transform.right * length, Color.red);
+        Debug.DrawRay(transform.position, transform.forward * length, Color.red);
         if (Input.GetKeyDown(KeyCode.G))
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.right, out hit, length))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, length))
             {
                 ICraneInteractable interactable = hit.collider.GetComponent<ICraneInteractable>();
                 {
