@@ -23,7 +23,7 @@ public class Branch : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("River"))
         {
             Debug.Log("ground 와 닿음 ");
 
@@ -51,7 +51,7 @@ public class Branch : MonoBehaviour
             }
 
             // 기존 코드 유지 - ObstacleManager와 ReturnToPoolAfterDelay
-            StartCoroutine(ReturnToPool());
+           // StartCoroutine(ReturnToPool());
         }
     }
 
