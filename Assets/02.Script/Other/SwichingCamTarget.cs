@@ -42,5 +42,6 @@ public class SwichingCamTarget : MonoBehaviour
             targetGroup.m_Targets[0].weight = secondWight; //여우 
             targetGroup.m_Targets[1].weight = fristWight; //두루미
         }
+
     }
 }

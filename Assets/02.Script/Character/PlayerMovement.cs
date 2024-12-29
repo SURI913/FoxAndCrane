@@ -22,7 +22,8 @@ public class PlayerMovement : MonoBehaviour
 
     // 이벤트 선언
     public static event Action OnSwitchObject;
-    public static event Action OnSwitchCamera;
+    public static event Action OnSwitchSide;
+    public static event Action OnSwitchBack;
 
     protected virtual void Start()
     {
@@ -38,17 +39,21 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (isReversing) return; //움직임 제한중
-        //갑자기 입력이 바뀌니까 그런건가 뭔가 버벅거림 + 
+        if (isReversing)
+        {
+            myAnimator.SetBool("isWalk", false);
+            return; //움직임 제한중
+        }
 
         //사용자 캐릭터 변경
         if (Input.GetKeyDown(KeyCode.Z) && isActiveAndEnabled)
         {
-            myAnimator.SetBool("isWalk", false); //걸을때 전환되더라도 애니메이션 정지되야하는디 안됨,,
             SetPlayerType(PlayerData.currentPlayer == PlayerType.Fox ? PlayerType.Crane : PlayerType.Fox);
             // 이벤트 호출
             OnSwitchObject?.Invoke();
             print("현재 움직일 수 있는 캐릭터: " + PlayerData.currentPlayer);
+            //카메라 전환?
+            myAnimator.SetBool("isWalk", false);
             
         }
 
@@ -76,12 +81,10 @@ public class PlayerMovement : MonoBehaviour
     public void SetPlayerType(PlayerType changeType)
     {
         PlayerData.currentPlayer = changeType;
-        print(PlayerData.currentPlayer);
         //자식 업데이트 제어
         foreach (PlayerMovement player in FindObjectsOfType<PlayerMovement>())
         {         
             player.enabled = (player.GetPlayerType() == changeType);
-            Debug.Log($"{player.GetPlayerType()} : {player.GetPlayerType() == changeType}");
         }
     }
     protected virtual PlayerType GetPlayerType()
@@ -188,12 +191,19 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnEnable()
     {
+        Debug.Log("움직임 제어 이벤트 구독 완료");
         // 이벤트 구독
         SwichingCamera.OnSwichMovement += OnSwichMovement;
+
+
+        if (isSideScroll) OnSwitchSide?.Invoke();
+        else OnSwitchBack?.Invoke(); ;
     }
 
     private void OnDisable()
     {
+        Debug.Log("움직임 제어 이벤트 구독 해제");
+
         // 이벤트 구독 해제
         SwichingCamera.OnSwichMovement -= OnSwichMovement;
     }
