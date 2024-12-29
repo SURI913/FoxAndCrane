@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireParticle : MonoBehaviour
+public class FireParticle : MonoBehaviour //»∂∫“ø°∞‘ ¡‡æﬂ«“µÌ
 {
     public ParticleSystem fireParticle;
     public GameObject crane;
@@ -26,7 +26,7 @@ public class FireParticle : MonoBehaviour
         {
             if(!isPlay)
             {
-                fireParticle.Play();
+                fireParticle.Play(); //∆ƒ∆º≈¨ ¿ÁΩ√¿€
                 isPlay = true;
             } 
         }
@@ -34,7 +34,7 @@ public class FireParticle : MonoBehaviour
         {
             if(isPlay)
             {
-                fireParticle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                fireParticle.Stop(true, ParticleSystemStopBehavior.StopEmitting); //∆ƒ∆º≈¨ ∏ÿ√„
                 isPlay = false;
             }
         }

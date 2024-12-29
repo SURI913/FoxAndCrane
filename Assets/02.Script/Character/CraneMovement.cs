@@ -15,7 +15,6 @@ public class CraneMovement : PlayerMovement
     protected override void Update()
     {
         base.Update();
-
         //로직 추가
     }
 

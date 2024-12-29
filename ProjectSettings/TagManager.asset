@@ -12,6 +12,7 @@ TagManager:
   - branch1
   - Ground
   - EndPoint
+  - WayPoint
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - Wall
   - 
   - 
-  - 
-  - 
+  - Crane
+  - Tree(fruit)
   - 
   - 
   - 
