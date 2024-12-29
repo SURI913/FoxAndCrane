@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Main Camera Blends
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: Virtual Camera (1)
+  - m_From: SideView
     m_To: BackView
     m_Blend:
       m_Style: 1

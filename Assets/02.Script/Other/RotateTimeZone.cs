@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Default;
 
 public class RotateTimeZone : MonoBehaviour
 {
     public GameObject lightObject;
-    public Quaternion rotateValue;
+    private  Quaternion rotateValue;
+    private Color colorValue;
 
     public float rotationDuration = 2f; // 회전 시간 (초)
 
     private bool isChange;
+    private Light myLight;
 
-    enum LightType
-    {
-
-    }
+    public Default.LightType myType;
 
     struct LightValue{
         public LightValue(Quaternion _quaternion, Color _color)
@@ -22,13 +22,13 @@ public class RotateTimeZone : MonoBehaviour
             quaternion = _quaternion;
             color = _color;
         }
-        Quaternion quaternion;
-        Color color;
+        public Quaternion quaternion;
+        public Color color;
     }
-    LightValue dayTime = new LightValue(Quaternion.Euler(50, -30, 0), new Color(255, 244, 214));
-    LightValue eveningTime = new LightValue(Quaternion.Euler(40,-45,-20), new Color(180, 150, 145));
-    LightValue nightTime = new LightValue(Quaternion.Euler(185, 45, -20), new Color(55, 65, 80));
-    LightValue endTime = new LightValue(Quaternion.Euler(0, 70, 0), new Color(180, 150, 145));
+    LightValue dayTime = new LightValue(Quaternion.Euler(50, -30, 0), new Color(255/255f, 244/255f, 214 / 255f));
+    LightValue eveningTime = new LightValue(Quaternion.Euler(40,-45,-20), new Color(180 / 255f, 150 / 255f, 145 / 255f));
+    LightValue nightTime = new LightValue(Quaternion.Euler(185, 45, -20), new Color(55 / 255f, 65 / 255f, 80 / 255f));
+    LightValue endTime = new LightValue(Quaternion.Euler(0, 70, 0), new Color(180 / 255f, 150 / 255f, 145 /255f));
 
 
 
@@ -47,15 +47,46 @@ public class RotateTimeZone : MonoBehaviour
 
     private void Start()
     {
+        myLight = lightObject.GetComponent<Light>();
         isChange = false;
+        switch (myType)
+        {
+            case Default.LightType.DayTime:
+                rotateValue = dayTime.quaternion;
+                colorValue = dayTime.color;
+                break;
+            case Default.LightType.EveningTime:
+                rotateValue = eveningTime.quaternion;
+                colorValue = eveningTime.color;
+                break;
+            case Default.LightType.NightTime:
+                rotateValue = nightTime.quaternion; 
+                colorValue= nightTime.color;
+                break;
+            case Default.LightType.EndTime:
+                rotateValue = endTime.quaternion;
+                colorValue = endTime.color;
+                break;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")&& !isChange)
+        if (other.CompareTag("Player")&& !isChange && MapData.currnetLight != myType)
         {
+            Debug.Log(other.name+"이 입장 활성화");
             isChange = true;
+            MapData.currnetLight = myType;
+            myLight.color = colorValue;
             StartCoroutine(RotateLight(lightObject.transform.rotation, rotateValue));
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && isChange)
+        {
+            Debug.Log(other.name + "이 나가기 활성화");
         }
     }
 
