@@ -16,12 +16,8 @@ public class PickBranch : MonoBehaviour, ICraneInteractable
             branch.transform.SetParent(obj.transform);
 
             //자식 위치 수정
-            branch.transform.localPosition = new Vector3(0,-0.1f, 0.3f); 
+            branch.transform.localPosition = new Vector3(0,-0.1f, 0.55f); 
             branch.transform.localRotation = Quaternion.Euler(0 ,180, 0);
-            if(!branch)
-            {
-                branch = null;
-            }
         }
         //else
         //{
