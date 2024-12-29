@@ -113,7 +113,10 @@ public class PlayerMovement : MonoBehaviour
         }
         myAnimator.SetBool("isWalk", movement != Vector3.zero);
 
-        //Turn();
+        if (isSideScroll)
+        {
+            Turn();
+        }
     }
 
     private void Jump()
