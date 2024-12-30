@@ -48,14 +48,10 @@ public class NPC : MonoBehaviour
 
     private void MoveOutOfWay()
     {
-
-        //ismoveout 으로 함수를 업데이트에 돌려보자 ; 그냥 개빡친다 ;
-       // target.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-
-        // 목표 위치까지 서서히 이동 (속도 증가)
+       
         transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
 
-        // 목표 위치에 도달하면 이동 종료
+        //도착하면 정지
         if (transform.position.z == target.position.z)
         {
             Debug.Log("목표 위치 도달");
@@ -63,19 +59,6 @@ public class NPC : MonoBehaviour
             isMoveout = false;
 
         }
-
-        /*Vector3 currentPosition = transform.position;
-        currentPosition.z += 1.0f; // 1.0f만큼 Z축 이동
-        transform.position = currentPosition;*/
-        // transform.position = Vector3.Lerp(transform.position, target.position, moveSpeed * Time.deltaTime);
-        /*
-                float targetPositionZ = transform.position.z + 2f;
-
-                // Z축 방향으로 부드럽게 이동
-                float smoothZ = Mathf.Lerp(transform.position.z, targetPositionZ, Time.deltaTime * moveSpeed);
-
-                transform.position = new Vector3(transform.position.x, transform.position.y, smoothZ);
-        */
     }
 
    
