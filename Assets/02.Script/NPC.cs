@@ -9,23 +9,32 @@ public class NPC : MonoBehaviour
     private GameObject boneFire;
     [SerializeField]
     public Transform target;
-    public float moveSpeed = 1f; // 이동 속도
-  
-
+    public float moveSpeed = 5f; // 이동 속도
+   // public Vector3 targetPosition;
+    private bool isMoveout = false;
+   
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         
     }
-
+    private void Update()
+    {
+        if(isMoveout)
+        {
+            MoveOutOfWay();
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
        
         if (collision.gameObject.CompareTag("Berry"))
         {
             Debug.Log("열매 확인, 왕 비켜줌");
-            MoveOutOfWay();
+           // MoveOutOfWay();
+            isMoveout = true;
+
         } 
 
 
@@ -39,7 +48,26 @@ public class NPC : MonoBehaviour
 
     private void MoveOutOfWay()
     {
-        transform.position = Vector3.Lerp(transform.position, target.position, moveSpeed * Time.deltaTime);
+
+        //ismoveout 으로 함수를 업데이트에 돌려보자 ; 그냥 개빡친다 ;
+       // target.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        // 목표 위치까지 서서히 이동 (속도 증가)
+        transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+
+        // 목표 위치에 도달하면 이동 종료
+        if (transform.position.z == target.position.z)
+        {
+            Debug.Log("목표 위치 도달");
+           // rb.velocity = Vector3.zero;
+            isMoveout = false;
+
+        }
+
+        /*Vector3 currentPosition = transform.position;
+        currentPosition.z += 1.0f; // 1.0f만큼 Z축 이동
+        transform.position = currentPosition;*/
+        // transform.position = Vector3.Lerp(transform.position, target.position, moveSpeed * Time.deltaTime);
         /*
                 float targetPositionZ = transform.position.z + 2f;
 
