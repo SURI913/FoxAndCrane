@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 5283929297915286369}
   - component: {fileID: 9058640866651024498}
   - component: {fileID: 8602147426719169556}
-  - component: {fileID: -2786428975852775099}
   - component: {fileID: 6976489885245716802}
   - component: {fileID: 8133880466777598490}
   - component: {fileID: 6487297075294348722}
+  - component: {fileID: -2786428975852775099}
   m_Layer: 0
   m_Name: Branch
   m_TagString: branch
@@ -115,27 +115,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 64
   m_CollisionDetection: 0
---- !u!65 &-2786428975852775099
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8215559852946523975}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.0327251, y: 0.22746198, z: 0.565475}
-  m_Center: {x: 0.015090555, y: 0.11874684, z: -0.048219837}
 --- !u!65 &6976489885245716802
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -183,3 +162,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logPrefab: {fileID: 743610133502853861, guid: e5ec1fff776e5434e95c00a20e40652e,
     type: 3}
+--- !u!65 &-2786428975852775099
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8215559852946523975}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0327251, y: 0.22746198, z: 0.565475}
+  m_Center: {x: 0.015090555, y: 0.11874684, z: -0.048219837}
