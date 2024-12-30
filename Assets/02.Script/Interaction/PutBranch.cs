@@ -15,12 +15,4 @@ public class PutBranch : MonoBehaviour, ICraneInteractable
         transform.SetParent(null);
         rigid.isKinematic = false;
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.name == "NPC")
-        {
-            //모닥불에  불이 다시 생기고, 여우에게 횃불을 주는 이벤트
-        }
-    }
 }
