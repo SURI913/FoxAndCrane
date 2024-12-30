@@ -12,7 +12,6 @@ public class PutBranch : MonoBehaviour, ICraneInteractable
     }
     public void Interaction(CraneInteraction obj)
     {
-     
         transform.SetParent(null);
         rigid.isKinematic = false;
     }
