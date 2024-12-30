@@ -1,3 +1,4 @@
+using Default;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,17 @@ public class ShadowMatcher : MonoBehaviour
     private float currentTime;       // 현재 타이머 값
     private bool timerRunning = false; // 타이머 실행 상태
 
+    public bool isPlayerGrabCheck;
+
+    public GameObject RookObject;
+
+    private SwichingCamera myCleartData;
+
+
+    private void Start()
+    {
+        myCleartData = GetComponentInParent<SwichingCamera>();
+    }
     private void Update()
     {
         CheckMatch();
@@ -24,7 +36,7 @@ public class ShadowMatcher : MonoBehaviour
             if (currentTime > 0)
             {
                 currentTime -= Time.deltaTime;
-                Debug.Log($"남은 시간: {currentTime:F2}초");
+                //Debug.Log($"남은 시간: {currentTime:F2}초");
             }
             else
             {
@@ -51,8 +63,10 @@ public class ShadowMatcher : MonoBehaviour
         // 회전 차이 계산
         float rotationDifference = Quaternion.Angle(transform.rotation, targetShadow.rotation);
 
+
         // 판정
-        if (positionDifference < positionTolerance && rotationDifference < rotationTolerance)
+        if (positionDifference < positionTolerance && rotationDifference < rotationTolerance 
+            && isPlayerGrabCheck == PlayerData.isGrabTorch)
         {
             Debug.Log("매칭 성공!");
             OnMatchSuccess();
@@ -63,6 +77,8 @@ public class ShadowMatcher : MonoBehaviour
     {
         // 매칭 성공 처리 (예: 다음 단계로 이동, 효과 재생)
         Debug.Log("정답 처리 완료!");
+        RookObject.SetActive(false);
+        myCleartData.isClear = true;
     }
 
     private void ShowHint()
