@@ -7,7 +7,7 @@ public class NPC : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private GameObject boneFire;
-    public float moveSpeed = 2f; // ÀÌµ¿ ¼Óµµ
+    public float moveSpeed = 2f; // ì´ë™ ì†ë„
   
 
 
@@ -21,14 +21,14 @@ public class NPC : MonoBehaviour
        
         if (collision.gameObject.CompareTag("Berry"))
         {
-            Debug.Log("¿­¸Å È®ÀÎ, ¿Õ ºñÄÑÁÜ");
+            Debug.Log("ì—´ë§¤ í™•ì¸, ì™• ë¹„ì¼œì¤Œ");
             MoveOutOfWay();
         } 
 
 
         if(collision.gameObject.CompareTag("branch1"))
         {
-            Debug.Log("³ª¹µ°¡Áö È®ÀÎ. ¸ğ´ÚºÒ µå¸²");
+            Debug.Log("ë‚˜ë­‡ê°€ì§€ í™•ì¸. ëª¨ë‹¥ë¶ˆ ë“œë¦¼");
             GiveFire();
             Destroy(collision.gameObject);// branch Destroy
         }
@@ -36,10 +36,7 @@ public class NPC : MonoBehaviour
 
     private void MoveOutOfWay()
     {
-        float targetPositionZ = transform.position.z + 2f;
 
-        // ZÃà ¹æÇâÀ¸·Î ºÎµå·´°Ô ÀÌµ¿
-        float smoothZ = Mathf.Lerp(transform.position.z, targetPositionZ, Time.deltaTime * moveSpeed);
     }
 
    
