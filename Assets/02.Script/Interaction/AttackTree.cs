@@ -13,8 +13,13 @@ public class AttackTree : MonoBehaviour, IFoxInteractable
 
     [SerializeField]
     bool isFall;
-   
 
+    Rigidbody rigid;
+   
+    void Awake()
+    {
+        rigid = GetComponent<Rigidbody>();
+    }
     void Start()
     {
         SubscribeToFruits();
@@ -55,7 +60,7 @@ public class AttackTree : MonoBehaviour, IFoxInteractable
         Fruit[] fruits = GetComponentsInChildren<Fruit>();
         foreach (Fruit fruit in fruits)
         {
-            if(fruit.transform.position.x < 0)
+            if(fruit.transform.localPosition.x < 0f)
             {
                 left.Add(fruit);
             }
@@ -94,9 +99,10 @@ public class AttackTree : MonoBehaviour, IFoxInteractable
     }
     void FallTree()
     {
+        rigid.isKinematic = false;
         if (fall > -90) //나무 쓰러지기
         {
-            transform.Rotate(new Vector3(0f, 0f, fall) * Time.deltaTime);
+            transform.Rotate(new Vector3(0, 0, fall) * Time.deltaTime);
         }
     }
 }

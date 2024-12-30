@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class CraneInteraction : PlayerInteraction
 {
     public Image keyG; // UI 이미지
-    public float sphereRadius = 0.5f; // 구의 반지름
-    public float rayLength = 5.0f; // 레이 길이
+    public float sphereRadius; // 구의 반지름
+    public float rayLength; // 레이 길이
     public Color debugColor = Color.red; // Debug 색상
+
 
     private void Update()
     {
@@ -20,7 +21,6 @@ public class CraneInteraction : PlayerInteraction
         // Ray의 시작 위치와 방향
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward;
-
         RaycastHit hit;
 
         // SphereCast 실행
@@ -40,7 +40,7 @@ public class CraneInteraction : PlayerInteraction
         }
         else
         {
-            keyG.color = Color.gray; // 상호작용 불가능 시 색 변경
+            keyG.color = new Color(0f,0f,0f,0f); // 상호작용 불가능 시 색 변경
         }
         // Debug 시각화
         Debug.DrawLine(origin, origin + direction * rayLength, debugColor); // Ray 시각화

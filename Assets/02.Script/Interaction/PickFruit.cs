@@ -2,45 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickFruit : MonoBehaviour, ICraneInteractable
+public class PickFruit : MonoBehaviour, ICraneInteractable //자식으로 하면 문제생김
 {
-    Rigidbody rigid;
 
-    
+    bool isAttached = false;
+    [SerializeField]
+    Transform craneTransform;
+    Vector3 offset; //두루미와 열매 사이의 초기 상대적 위치
 
-    void Awake()
-
+    //두루미 상태를 관리하는 정적 변수
+    public static bool isFruitAttachedToCrane = false;
+    void LateUpdate()
     {
-        if (rigid == null)
+        if(isAttached && craneTransform != null)
         {
-            rigid = GetComponent<Rigidbody>();
-        }
-        
-
-    }
-    public void Interaction(CraneInteraction obj)
-    {
-        GameObject fruit = null;
-        if (obj.transform.childCount == 0)
-        {
-            Debug.Log("열매 상호작용");
-            fruit = this.gameObject;
-            fruit.transform.SetParent(obj.transform);
-            //자식 위치 수정
-            fruit.transform.localPosition = new Vector3(0, -0.05f, 0.4f);
-        }
-        else
-        {
-            transform.SetParent(null);
-            rigid.isKinematic = false;
+            //열매를 두루미 상대 위치 고정
+            transform.position = craneTransform.position + offset;
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    public void Interaction(CraneInteraction obj) //자식으로 가져와 트리의 자식에서 빼짐
     {
-        if (collision.gameObject.tag == "Tree")
+        if(!isAttached && !isFruitAttachedToCrane) //두루미에 부착
         {
-            rigid.isKinematic = true;
-            transform.SetParent(collision.transform);
+            isAttached = true;
+            isFruitAttachedToCrane = true; //다른 열매 부착방지
+            craneTransform = obj.transform;
+            offset = transform.position - craneTransform.position;
+        }
+        else if(isAttached)
+        {
+            isAttached = false;
+            isFruitAttachedToCrane = false;
+            craneTransform = null;
         }
     }
+   
 }
