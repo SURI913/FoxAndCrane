@@ -7,9 +7,7 @@ public class Branch : MonoBehaviour
     private Rigidbody rb;
     private static int branchCount = 0; 
     public GameObject logPrefab; 
-    private ObstacleManager obstacleManager;
-    [SerializeField]
-    private GameObject logPosition;
+    private ObstacleManager obstacleManager; 
 
     void Start()
     {
@@ -25,9 +23,9 @@ public class Branch : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("River"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("River 와 닿음 ");
+            Debug.Log("ground 와 닿음 ");
 
             //rigidbody를 비활성화 물리적인 움직임 멈춤
             if (rb != null)
@@ -46,14 +44,14 @@ public class Branch : MonoBehaviour
             Debug.Log(branchCount);
 
             // Branch가 5개 충돌했을 때 Log 생성
-            if (branchCount >= 1)
+            if (branchCount >= 5)
             {
-                Instantiate(logPrefab, transform.position, Quaternion.identity);
+                Instantiate(logPrefab, collision.transform.position, Quaternion.identity);
                 branchCount = 0; // 카운트 초기화
             }
 
             // 기존 코드 유지 - ObstacleManager와 ReturnToPoolAfterDelay
-           // StartCoroutine(ReturnToPool());
+            StartCoroutine(ReturnToPool());
         }
     }
 

@@ -7,40 +7,28 @@ public class NPC : MonoBehaviour
     private Rigidbody rb;
     [SerializeField]
     private GameObject boneFire;
-    [SerializeField]
-    public Transform target;
-    public float moveSpeed = 5f; // ÀÌµ¿ ¼Óµµ
-   // public Vector3 targetPosition;
-    private bool isMoveout = false;
-   
+    public float moveSpeed = 2f; // ì´ë™ ì†ë„
+  
+
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
     }
-    private void Update()
-    {
-        if(isMoveout)
-        {
-            MoveOutOfWay();
-        }
-    }
+
     private void OnCollisionEnter(Collision collision)
     {
        
         if (collision.gameObject.CompareTag("Berry"))
         {
-            Debug.Log("¿­¸Å È®ÀÎ, ¿Õ ºñÄÑÁÜ");
-           // MoveOutOfWay();
-            isMoveout = true;
-
+            Debug.Log("ì—´ë§¤ í™•ì¸, ì™• ë¹„ì¼œì¤Œ");
+            MoveOutOfWay();
         } 
 
 
-        if(collision.gameObject.CompareTag("branch"))
+        if(collision.gameObject.CompareTag("branch1"))
         {
-            Debug.Log("³ª¹µ°¡Áö È®ÀÎ. ¸ğ´ÚºÒ µå¸²");
+            Debug.Log("ë‚˜ë­‡ê°€ì§€ í™•ì¸. ëª¨ë‹¥ë¶ˆ ë“œë¦¼");
             GiveFire();
             Destroy(collision.gameObject);// branch Destroy
         }
@@ -48,17 +36,7 @@ public class NPC : MonoBehaviour
 
     private void MoveOutOfWay()
     {
-       
-        transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
 
-        //µµÂøÇÏ¸é Á¤Áö
-        if (transform.position.z == target.position.z)
-        {
-            Debug.Log("¸ñÇ¥ À§Ä¡ µµ´Ş");
-           // rb.velocity = Vector3.zero;
-            isMoveout = false;
-
-        }
     }
 
    
