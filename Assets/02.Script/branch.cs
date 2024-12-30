@@ -23,7 +23,7 @@ public class Branch : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Water"))
         {
             Debug.Log("ground 와 닿음 ");
 
@@ -44,7 +44,7 @@ public class Branch : MonoBehaviour
             Debug.Log(branchCount);
 
             // Branch가 5개 충돌했을 때 Log 생성
-            if (branchCount >= 5)
+            if (branchCount >= 2)
             {
                 Instantiate(logPrefab, collision.transform.position, Quaternion.identity);
                 branchCount = 0; // 카운트 초기화
