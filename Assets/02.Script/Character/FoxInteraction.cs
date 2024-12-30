@@ -36,7 +36,7 @@ public class FoxInteraction : PlayerInteraction
         }
         else
         {
-            keyG.color = Color.gray;
+            keyG.color = new Color(0f, 0f, 0f, 0f); // 상호작용 불가능 시 색 변경
         }
         // Debug 시각화
         Debug.DrawLine(origin, origin + direction * rayLength, debugColor); // Ray 시각화

@@ -11,6 +11,7 @@ namespace Default
         DayTime,
         EveningTime, 
         NightTime,
+        DawmTime,
         EndTime
     }
 
