@@ -179,11 +179,13 @@ public class PlayerMovement : MonoBehaviour
      
     private void OnSwichMovement()
     {
+        
         ReversingControll(); //카메라 방향에 맞춰서 그런가
         //어느정도 문구가 떠야할 듯 방향키관련해서
         isSideScroll = !isSideScroll;
         Invoke("ReversingControll", 2f);
-        
+        transform.position = new Vector3(transform.position.x, transform.position.y, MapData.zAxis);
+
     }
     private void ReversingControll()
     {

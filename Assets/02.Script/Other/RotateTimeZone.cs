@@ -11,7 +11,7 @@ public class RotateTimeZone : MonoBehaviour
 
     public float rotationDuration = 2f; // 회전 시간 (초)
 
-    private bool isChange;
+    public bool isChange;
     private Light myLight;
 
     public Default.LightType myType;
@@ -79,14 +79,6 @@ public class RotateTimeZone : MonoBehaviour
             MapData.currnetLight = myType;
             myLight.color = colorValue;
             StartCoroutine(RotateLight(lightObject.transform.rotation, rotateValue));
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player") && isChange)
-        {
-            Debug.Log(other.name + "이 나가기 활성화");
         }
     }
 
