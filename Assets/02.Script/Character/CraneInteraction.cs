@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class CraneInteraction : PlayerInteraction
 {
-    public Image keyG; // UI 이미지
     public float sphereRadius; // 구의 반지름
     public float rayLength; // 레이 길이
     public Color debugColor = Color.red; // Debug 색상
 
+    public Animator myAnimator;
 
     private void Update()
     {
@@ -30,17 +30,13 @@ public class CraneInteraction : PlayerInteraction
             ICraneInteractable interactable = hit.collider.GetComponent<ICraneInteractable>();
             if (interactable != null)
             {
-                keyG.color = Color.white; // 상호작용 가능 시 색 변경
 
                 if (Input.GetKeyDown(KeyCode.G))
                 {
                     interactable.Interaction(this);
+                    myAnimator.SetTrigger("Pick");
                 }
             }
-        }
-        else
-        {
-            keyG.color = new Color(0f,0f,0f,0f); // 상호작용 불가능 시 색 변경
         }
         // Debug 시각화
         Debug.DrawLine(origin, origin + direction * rayLength, debugColor); // Ray 시각화

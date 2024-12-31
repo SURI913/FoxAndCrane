@@ -11,19 +11,21 @@ public class SwichingCamera : MonoBehaviour
 
     public static event Action OnSwichMovement;
 
+    private bool isChange;
+
     public bool isClear { get; set; }
 
     private void Start()
     {
         shadowObject.SetActive(false);
+        isChange = false;
         isClear = false;
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        
-        //플레이어 캐릭터 입장 시 화면 전환하는 걸 캐릭터가 두개니까 둘 다 도착해야지 되도록 해야하나?
-        if (collision.CompareTag("Player") && !isClear)
+        //플레이어 캐릭터 입장 시 백뷰 화면 전환
+        if (collision.CompareTag("Player") && !isClear && PlayerData.currentCamType != Default.CameraType.Back)
         {
             OnBackView(); //backview로
             shadowObject.SetActive(true);
@@ -33,9 +35,9 @@ public class SwichingCamera : MonoBehaviour
 
     private void OnTriggerExit(Collider collision)
     {
-        //플레이어 캐릭터 입장 시 화면 전환
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && PlayerData.currentCamType != Default.CameraType.Side)
         {
+            //해당 캐릭터가 백 뷰인가 체크하고 변환해도 좋지 않을까
             OnSideView();
             shadowObject.SetActive(false);
             OnSwichMovement?.Invoke();
@@ -57,12 +59,14 @@ public class SwichingCamera : MonoBehaviour
 
     public void OnSideView()
     {
+        PlayerData.currentCamType = Default.CameraType.Side;
         cameraGroup[0].SetActive(true);
         cameraGroup[1].SetActive(false);
     }
 
     public void OnBackView()
     {
+        PlayerData.currentCamType = Default.CameraType.Back;
         cameraGroup[0].SetActive(false);
         cameraGroup[1].SetActive(true);
     }

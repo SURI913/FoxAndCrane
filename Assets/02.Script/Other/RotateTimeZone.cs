@@ -10,7 +10,7 @@ public class RotateTimeZone : MonoBehaviour
     private Color colorValue;
     private float intensityValue;
 
-    public float rotationDuration = 2f; // 회전 시간 (초)
+    public float rotationDuration = 1.5f; // 회전 시간 (초)
 
     public bool isChange;
     private Light myLight;
@@ -30,7 +30,7 @@ public class RotateTimeZone : MonoBehaviour
     }
     LightValue dayTime = new LightValue(Quaternion.Euler(50, -30, 0), new Color(255/255f, 244/255f, 214 / 255f), 1);
     LightValue eveningTime = new LightValue(Quaternion.Euler(40,-45,-20), new Color(180 / 255f, 150 / 255f, 145 / 255f), 1);
-    LightValue nightTime = new LightValue(Quaternion.Euler(185, 45, -20), new Color(55 / 255f, 65 / 255f, 80 / 255f), 1);
+    LightValue nightTime = new LightValue(Quaternion.Euler(-100, 45, -20), new Color(55 / 255f, 65 / 255f, 80 / 255f), 1);
     LightValue dawmTime = new LightValue(Quaternion.Euler(-5, 30, 10), new Color(15 / 255f, 35 / 255f, 85 / 255f), 40);
     LightValue endTime = new LightValue(Quaternion.Euler(0, 70, 0), new Color(180 / 255f, 150 / 255f, 145 /255f), 1);
 
@@ -85,11 +85,11 @@ public class RotateTimeZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")&& !isChange && MapData.currnetLight != myType)
+        //조명은 한번 변경되면 다시 돌릴 수 없음
+        if (other.CompareTag("Player")&& !isChange)
         {
             Debug.Log(other.name+"이 입장 활성화");
             isChange = true;
-            MapData.currnetLight = myType;
             myLight.intensity = intensityValue;
             myLight.color = colorValue;
             StartCoroutine(RotateLight(lightObject.transform.rotation, rotateValue));

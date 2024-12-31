@@ -657,6 +657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4428894631334056}
   - component: {fileID: 95744679087321986}
+  - component: {fileID: 1010485756482219143}
   m_Layer: 0
   m_Name: SCharacter_Bird2
   m_TagString: Untagged
@@ -672,13 +673,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584313364877740}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22044106, y: -0.061295297, z: 0.0018488556, w: 0.97347075}
+  m_LocalRotation: {x: 0.22043855, y: -0.061294116, z: 0.0018505753, w: 0.97347134}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4511685310913238}
   - {fileID: 4589260953215814}
+  - {fileID: 3873471807402100477}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 25.43, y: -7.541, z: -1.486}
 --- !u!95 &95744679087321986
@@ -702,6 +704,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1010485756482219143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584313364877740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ead9e414073a94d90cd3080c0a8617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1611628611915640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,3 +1033,56 @@ Transform:
   - {fileID: 4400846241481368}
   m_Father: {fileID: 4728781106508742}
   m_LocalEulerAnglesHint: {x: 0.389, y: -87.362, z: -141.067}
+--- !u!1 &8683108277134726531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3873471807402100477}
+  - component: {fileID: 7749098066427814365}
+  m_Layer: 0
+  m_Name: CrowZone
+  m_TagString: Crow
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3873471807402100477
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8683108277134726531}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.20141977, y: 0, z: 0, w: 0.97950506}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4428894631334056}
+  m_LocalEulerAnglesHint: {x: -23.24, y: 0, z: 0}
+--- !u!65 &7749098066427814365
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8683108277134726531}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.508225, y: 9.940219, z: 10.397066}
+  m_Center: {x: 0.19948862, y: 5.273243, z: -0.70755464}
