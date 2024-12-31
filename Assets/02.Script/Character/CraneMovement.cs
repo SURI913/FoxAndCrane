@@ -7,10 +7,6 @@ public class CraneMovement : PlayerMovement
     protected override void Start()
     {       
         base.Start(); //부모 먼저 실행 필수
-
-        //두루미는 점프 x 
-        myRigidBody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
-            RigidbodyConstraints.FreezeRotationX;
     }
     protected override void Update()
     {

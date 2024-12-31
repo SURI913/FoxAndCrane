@@ -10,8 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f; // 이동 속도
     [Header("점프 높이 조절")]
     public float jumpForce = 7f; // 점프 힘
-    [Header("[테스트용] true: 횡스크롤, false: 탑뷰")]
-    public bool isSideScroll = true;
+    [Header("[테스트용] true: 백뷰용 움직임, false: 자유로운 움직임")]
+    public bool isEndPoint = true;
 
     protected Rigidbody myRigidBody;
     private bool isGrounded;
@@ -25,12 +25,13 @@ public class PlayerMovement : MonoBehaviour
     public static event Action OnSwitchSide;
     public static event Action OnSwitchBack;
 
+    private Vector3 startPosition;
+
     protected virtual void Start()
     {
         myAnimator = GetComponentInChildren<Animator>();
         myRigidBody = GetComponent<Rigidbody>();
-        myRigidBody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
-
+        startPosition = transform.position;
         isGrounded = false;
 
         PlayerData.currentPlayer = GetPlayerType();       
@@ -95,11 +96,12 @@ public class PlayerMovement : MonoBehaviour
     private void MoveMent()
     {
         float moveX = Input.GetAxis("Horizontal");
-        float moveZ = isSideScroll ? 0 : Input.GetAxis("Vertical");
+        float moveZ = Input.GetAxis("Vertical");
 
-        movement = isSideScroll
-            ? new Vector3(moveX, 0, 0)
-            : new Vector3(moveZ, 0, -moveX);
+        //엔드포인트에 도달했으면 백뷰 화면에 맞춰 움직임 아니라면 사이드 뷰에서 자유로운 움직임
+        movement = isEndPoint
+            ? new Vector3(moveZ, 0, -moveX)
+            : new Vector3(moveX, 0, moveZ);
  
         movement = movement.normalized;
 
@@ -116,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
         }
         myAnimator.SetBool("isWalk", movement != Vector3.zero);
 
-        if (isSideScroll)
+        if (!isEndPoint)
         {
             Turn();
         }
@@ -154,22 +156,34 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    void OnDead()
+    {
+        transform.position = startPosition;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            //죽음처리
+            myAnimator.SetTrigger("isDead");
+            Invoke("OnDead", 1f);
+        }
+    }
+
     public IEnumerator ReverseMovement()
     {
 
         isReversing = true; // 입력값 제한 시작
-
+        transform.rotation = Quaternion.Euler(0, -90f, 0);
         // 후퇴 동작
         float reverseTime = 1f; // 후퇴 지속 시간
         float elapsedTime = 0f;
 
         while (elapsedTime < reverseTime)
         {
-            movement = Vector3.back;
+            movement = Vector3.forward;
             transform.Translate(movement * moveSpeed * Time.deltaTime);
-            //Turn(); //=> 결과값이 rotation y =180이 들어감 이유는?
-            //transform.rotation = new Quaternion(0,-90,0,0);
-            // => 결과값이 rotation y = -180이 들어감 이유는?
             elapsedTime += Time.deltaTime;
             yield return null; // 한 프레임 대기
         }
@@ -182,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
         
         ReversingControll(); //카메라 방향에 맞춰서 그런가
         //어느정도 문구가 떠야할 듯 방향키관련해서
-        isSideScroll = !isSideScroll;
+        isEndPoint = !isEndPoint;
         Invoke("ReversingControll", 2f);
         transform.position = new Vector3(transform.position.x, transform.position.y, MapData.zAxis);
 
@@ -193,18 +207,16 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnEnable()
     {
-        Debug.Log("움직임 제어 이벤트 구독 완료");
         // 이벤트 구독
         SwichingCamera.OnSwichMovement += OnSwichMovement;
 
 
-        if (isSideScroll) OnSwitchSide?.Invoke();
+        if (!isEndPoint) OnSwitchSide?.Invoke();
         else OnSwitchBack?.Invoke(); ;
     }
 
     private void OnDisable()
     {
-        Debug.Log("움직임 제어 이벤트 구독 해제");
 
         // 이벤트 구독 해제
         SwichingCamera.OnSwichMovement -= OnSwichMovement;

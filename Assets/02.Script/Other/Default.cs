@@ -23,7 +23,7 @@ namespace Default
 
     static class MapData
     {
-        static public LightType currnetLight = LightType.DayTime;
+        //static public LightType currnetLight = LightType.DayTime;
         static public float zAxis = -2f;
     }
 
@@ -31,5 +31,6 @@ namespace Default
         static public string id; //프리펩 시작 할 경우 부여할거임
         static public PlayerType currentPlayer;
         static public bool isGrabTorch = false;
+        static public CameraType currentCamType = CameraType.Side; //시작은 무조건 사이드 뷰
     }
 }

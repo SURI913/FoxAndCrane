@@ -38,7 +38,6 @@ public class NPC : MonoBehaviour
 
         }
 
-
         if (collision.gameObject.CompareTag("branch"))
         {
             Debug.Log("나뭇가지 확인. 모닥불 드림");

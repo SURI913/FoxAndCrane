@@ -19,18 +19,5 @@ public class PickBranch : MonoBehaviour, ICraneInteractable
             branch.transform.localPosition = new Vector3(0,-0.1f, 0.55f); 
             branch.transform.localRotation = Quaternion.Euler(0 ,180, 0);
         }
-        //else
-        //{
-        //    Debug.Log("자식 제거");
-        //    // 자식 오브젝트 가져오기
-        //    branch = obj.transform.GetChild(0).gameObject;
-
-        //    branch.transform.SetParent(null);
-
-        //    //떨어트리기
-        //    Rigidbody rigid = branch.GetComponent<Rigidbody>();
-        //    if (!rigid) return;
-        //    rigid.isKinematic = false;
-        //}
     }
 }
